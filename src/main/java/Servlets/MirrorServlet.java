@@ -27,5 +27,6 @@ public class MirrorServlet extends HttpServlet {
             pageVariables.put(KEY, req.getParameter(URL_KEY));
         }
         resp.getWriter().println(PageGenerator.instance().getPage(pageName, pageVariables));
+        resp.setStatus(HttpServletResponse.SC_OK);
     }
 }
