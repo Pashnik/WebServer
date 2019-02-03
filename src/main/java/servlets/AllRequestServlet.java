@@ -1,6 +1,6 @@
-package Servlets;
+package servlets;
 
-import Templater.PageGenerator;
+import templater.PageGenerator;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;

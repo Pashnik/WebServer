@@ -1,5 +1,7 @@
-import Servlets.AllRequestServlet;
-import Servlets.MirrorServlet;
+package servers;
+
+import servlets.AllRequestServlet;
+import servlets.MirrorServlet;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
