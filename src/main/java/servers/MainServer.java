@@ -1,20 +1,23 @@
 package servers;
 
+import accounts.AccountService;
 import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.handler.HandlerList;
 import org.eclipse.jetty.server.handler.ResourceHandler;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
-import servlets.SessionsServlet;
-import servlets.UsersServlet;
+import servlets.AuthorizationServlet;
+import servlets.RegistrationServlet;
 
 public class MainServer {
     public static void main(String[] args) {
 
+        AccountService accountService = new AccountService();
+
         ServletContextHandler handler = new ServletContextHandler(ServletContextHandler.SESSIONS);
-        handler.addServlet(new ServletHolder(new UsersServlet()), "/api/v1/users");
-        handler.addServlet(new ServletHolder(new SessionsServlet()), "/api/v1/sessions");
+        handler.addServlet(new ServletHolder(new RegistrationServlet(accountService)), "/register");
+        handler.addServlet(new ServletHolder(new AuthorizationServlet(accountService)), "/auth");
 
         // static resources
         ResourceHandler resourceHandler = new ResourceHandler();
