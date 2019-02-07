@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 
 public class RegistrationServlet extends HttpServlet {
 
@@ -23,17 +24,19 @@ public class RegistrationServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         // check if user is registered
         String login = req.getParameter(LOGIN);
+
+        PrintWriter outputWriter = resp.getWriter();
+        resp.setContentType("text/html;charset=utf-8");
         if (login == null) {
-            resp.setContentType("text/html;charset=utf-8");
             resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             return;
         }
         UserProfile profile = accountService.getUserByLogin(login);
         if (profile == null) {
-            resp.setContentType("text/html;charset=utf-8");
+            outputWriter.println("User with this login " + login + " is not registered!");
             resp.setStatus(HttpServletResponse.SC_BAD_GATEWAY);
         } else {
-            resp.getWriter().println("User with login " + login + " is registered!");
+            outputWriter.println("User with login " + login + " is registered!");
             resp.setStatus(HttpServletResponse.SC_OK);
         }
     }
@@ -43,20 +46,20 @@ public class RegistrationServlet extends HttpServlet {
         // register new user
         String login = req.getParameter(LOGIN);
         String password = req.getParameter(PASSWORD);
+
+        PrintWriter outputWriter = resp.getWriter();
+        resp.setContentType("text/html;charset=utf-8");
         if (login == null || password == null) {
-            resp.setContentType("text/html;charset=utf-8");
             resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             return;
         }
         if (accountService.getUserByLogin(login) != null) {
-            resp.setContentType("text/html;charset=utf-8");
             resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-            resp.getWriter().println("User with this login is registered. Please choose other login!");
+            outputWriter.println("User with this login is registered. Please choose other login!");
         } else {
             accountService.addUser(new UserProfile(login, password));
-            resp.setContentType("text/html;charset=utf-8");
             resp.setStatus(HttpServletResponse.SC_OK);
-            resp.getWriter().println("User with login: " + login + " password: " + password + " is " +
+            outputWriter.println("User with login: " + login + " password: " + password + " is " +
                     "successfully registered!");
         }
     }

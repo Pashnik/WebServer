@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 
 public class AuthorizationServlet extends HttpServlet {
 
@@ -21,13 +22,14 @@ public class AuthorizationServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String session = req.getSession().getId();
+
+        PrintWriter outputWriter = resp.getWriter();
+        resp.setContentType("text/html;charset=utf-8");
         if (accountService.getUserBySession(session) == null) {
-            resp.setContentType("text/html;charset=utf-8");
             resp.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            resp.getWriter().println("Please authorize!");
+            outputWriter.println("Please authorize!");
         } else {
-            resp.setContentType("text/html;charset=utf-8");
-            resp.getWriter().println("User with login: " + accountService.getUserBySession(session) +
+            outputWriter.println("User with login: " + accountService.getUserBySession(session).getLogin() +
                     " is online!");
         }
     }
@@ -36,31 +38,30 @@ public class AuthorizationServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String login = req.getParameter(LOGIN);
         String password = req.getParameter(PASSWORD);
+
+        PrintWriter outputWriter = resp.getWriter();
+        resp.setContentType("text/html;charset=utf-8");
         if (login == null || password == null) {
-            resp.setContentType("text/html;charset=utf-8");
             resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             return;
         }
         UserProfile currentProfile = accountService.getUserByLogin(login);
         if (currentProfile == null) {
-            resp.setContentType("text/html;charset=utf-8");
-            resp.getWriter().println("User: " + login + " is not registered!");
+            outputWriter.println("User: " + login + " is not registered!");
             resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             return;
         }
         if (currentProfile.getPassword().equals(password)) {
             accountService.addSession(req.getSession().getId(), new UserProfile(login, password));
-            resp.setContentType("text/html;charset=utf-8");
-            resp.getWriter().println("Congratulations user: " + login + " you have just authorized!");
+            outputWriter.println("Congratulations user: " + login + " you have just authorized!");
         } else {
-            resp.setContentType("text/html;charset=utf-8");
-            resp.getWriter().println("Please select true password!");
+            outputWriter.println("Please select true password!");
         }
     }
 
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        String session = req.getSession().toString();
+        String session = req.getSession().getId();
         accountService.deleteSession(session);
         resp.setContentType("text/html;charset=utf-8");
         resp.getWriter().println("Good buy!");
