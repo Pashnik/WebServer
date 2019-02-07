@@ -12,6 +12,7 @@ import java.util.Map;
 public class AllRequestServlet extends HttpServlet {
 
     private static final String FILE_NAME = "page.html";
+    private static final String CONTENT_TYPE = "text/html;charset=utf-8";
 
     /*
     Jetty will call one of these functions when on this Servlet will come get or post request
@@ -31,7 +32,7 @@ public class AllRequestServlet extends HttpServlet {
         Map<String, Object> pageVariables = getPageVariables(req);
         String message = req.getParameter("message");
 
-        resp.setContentType("text/html;charset=utf-8");
+        resp.setContentType(CONTENT_TYPE);
         if (message == null || message.isEmpty()) {
             resp.setStatus(HttpServletResponse.SC_FORBIDDEN);
         } else {

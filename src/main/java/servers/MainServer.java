@@ -11,6 +11,9 @@ import servlets.AuthorizationServlet;
 import servlets.RegistrationServlet;
 
 public class MainServer {
+
+    public static final String CONTENT_TYPE = "text/html;charset=utf-8";
+
     public static void main(String[] args) {
 
         AccountService accountService = new AccountService();
