@@ -19,7 +19,7 @@ public class MainServer {
         AccountService accountService = new AccountService();
 
         ServletContextHandler handler = new ServletContextHandler(ServletContextHandler.SESSIONS);
-        handler.addServlet(new ServletHolder(new RegistrationServlet(accountService)), "/register");
+        handler.addServlet(new ServletHolder(new RegistrationServlet(accountService)), "/registration");
         handler.addServlet(new ServletHolder(new AuthorizationServlet(accountService)), "/auth");
 
         // static resources
