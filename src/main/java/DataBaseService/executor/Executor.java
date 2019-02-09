@@ -21,6 +21,12 @@ public class Executor {
     Process: insert, delete, create, update
      */
 
+    public void makeUpdate(StringBuilder query) throws SQLException {
+        try (Statement statement = connection.createStatement()) {
+            statement.execute(query.toString());
+        }
+    }
+
     public void makeUpdate(String query) throws SQLException {
         try (Statement statement = connection.createStatement()) {
             statement.execute(query);
@@ -31,9 +37,9 @@ public class Executor {
     Process: select
      */
 
-    public <T> T makeQuerry(String query, ResultGetter<T> resultGetter) throws SQLException {
+    public <T> T makeQuery(StringBuilder query, ResultGetter<T> resultGetter) throws SQLException {
         try (Statement statement = connection.createStatement()) {
-            statement.execute(query);
+            statement.execute(query.toString());
             ResultSet resultSet = statement.getResultSet();
             return resultGetter.getResult(resultSet);
         }
