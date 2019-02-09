@@ -1,4 +1,4 @@
-import DataBaseService.DBService;
+import dbService.DBService;
 import accounts.UserProfile;
 import org.junit.Test;
 

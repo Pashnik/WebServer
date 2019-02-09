@@ -1,6 +1,6 @@
-package DataBaseService;
+package dbService;
 
-import DataBaseService.dao.ProfileDAO;
+import dbService.dao.ProfileDAO;
 import accounts.UserProfile;
 import org.h2.jdbcx.JdbcDataSource;
 
@@ -57,6 +57,7 @@ public class DBService {
     public UserProfile getUserProfileById(long id) {
         try {
             ProfileDAO dao = new ProfileDAO(connection);
+            dao.createTable();
             return dao.getProfileById(id);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -67,6 +68,7 @@ public class DBService {
     public UserProfile getUserProfileByLogin(String login) {
         try {
             ProfileDAO profileDAO = new ProfileDAO(connection);
+            profileDAO.createTable();
             return profileDAO.getUserProfileByLogin(login);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -81,8 +83,6 @@ public class DBService {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
     }
-
 }
 

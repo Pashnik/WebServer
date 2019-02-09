@@ -19,12 +19,12 @@ public class MainServer {
         AccountService accountService = new AccountService();
 
         ServletContextHandler handler = new ServletContextHandler(ServletContextHandler.SESSIONS);
-        handler.addServlet(new ServletHolder(new RegistrationServlet(accountService)), "/registration");
-        handler.addServlet(new ServletHolder(new AuthorizationServlet(accountService)), "/auth");
+        handler.addServlet(new ServletHolder(new RegistrationServlet(accountService)), "/register");
+        handler.addServlet(new ServletHolder(new AuthorizationServlet(accountService)), "/logging");
 
         // static resources
         ResourceHandler resourceHandler = new ResourceHandler();
-        resourceHandler.setResourceBase("public_html");
+        resourceHandler.setResourceBase("templates");
 
         HandlerList handlerList = new HandlerList();
         handlerList.setHandlers(new Handler[]{resourceHandler, handler}); // firstly will process static resources

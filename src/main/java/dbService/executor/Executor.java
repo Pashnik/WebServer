@@ -1,4 +1,4 @@
-package DataBaseService.executor;
+package dbService.executor;
 
 import java.sql.Connection;
 import java.sql.ResultSet;

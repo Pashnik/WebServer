@@ -1,6 +1,6 @@
-package DataBaseService.dao;
+package dbService.dao;
 
-import DataBaseService.executor.Executor;
+import dbService.executor.Executor;
 import accounts.UserProfile;
 
 import java.sql.Connection;
@@ -20,6 +20,7 @@ public class ProfileDAO {
                 .append("select * from users where id = ")
                 .append(id);
         return executor.makeQuery(query, resultSet -> {
+            if (!resultSet.isBeforeFirst()) return null;
             resultSet.next();
             return new UserProfile(resultSet.getString(2), resultSet.getString(3));
         });
@@ -33,6 +34,7 @@ public class ProfileDAO {
                 .append(login)
                 .append("'");
         return executor.makeQuery(query, resultSet -> {
+            if (!resultSet.isBeforeFirst()) return null;
             resultSet.next();
             return new UserProfile(resultSet.getString("login"), resultSet.getString("password"));
         });
@@ -55,8 +57,8 @@ public class ProfileDAO {
         query
                 .append("create table if not exists users (")
                 .append("id bigint auto_increment NOT NULL,")
-                .append("login varchar(255) NOT NULL,")
-                .append("password varchar(255) NOT NULL,")
+                .append("login varchar(255),")
+                .append("password varchar(255),")
                 .append("primary key (id));");
         executor.makeUpdate(query);
     }

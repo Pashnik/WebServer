@@ -69,15 +69,7 @@ public class RegistrationServlet extends HttpServlet {
             resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
         } else {
             accountService.addUser(new UserProfile(login, password));
-            StringBuilder outputLine = new StringBuilder();
-            outputLine
-                    .append("User with login: ")
-                    .append(login)
-                    .append(" password: ")
-                    .append(password)
-                    .append(" is ")
-                    .append("successfully registered!");
-            outputWriter.println(outputLine);
+            resp.sendRedirect(req.getContextPath() + "/index.html");
             resp.setStatus(HttpServletResponse.SC_OK);
         }
     }
