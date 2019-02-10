@@ -2,6 +2,7 @@ package servlets;
 
 import accounts.AccountService;
 import accounts.UserProfile;
+import dbService.NoDataToGetException;
 import servers.MainServer;
 
 import javax.servlet.http.HttpServlet;
@@ -32,16 +33,8 @@ public class RegistrationServlet extends HttpServlet {
             resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             return;
         }
-        UserProfile profile = accountService.getUserByLogin(login);
-        if (profile == null) {
-            StringBuilder outputLine = new StringBuilder();
-            outputLine
-                    .append("User with this login ")
-                    .append(login)
-                    .append(" is not registered!");
-            outputWriter.println(outputLine);
-            resp.setStatus(HttpServletResponse.SC_BAD_GATEWAY);
-        } else {
+        try {
+            accountService.getUserByLogin(login);
             StringBuilder outputLine = new StringBuilder();
             outputLine
                     .append("User with login ")
@@ -49,6 +42,14 @@ public class RegistrationServlet extends HttpServlet {
                     .append(" is registered!");
             outputWriter.println(outputLine);
             resp.setStatus(HttpServletResponse.SC_OK);
+        } catch (NoDataToGetException e) {
+            StringBuilder outputLine = new StringBuilder();
+            outputLine
+                    .append("User with this login ")
+                    .append(login)
+                    .append(" is not registered!");
+            outputWriter.println(outputLine);
+            resp.setStatus(HttpServletResponse.SC_BAD_GATEWAY);
         }
     }
 
@@ -64,10 +65,11 @@ public class RegistrationServlet extends HttpServlet {
             resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             return;
         }
-        if (accountService.getUserByLogin(login) != null) {
+        try {
+            accountService.getUserByLogin(login);
             outputWriter.println("User with this login is registered. Please choose other login!");
             resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-        } else {
+        } catch (NoDataToGetException e) {
             accountService.addUser(new UserProfile(login, password));
             resp.sendRedirect(req.getContextPath() + "/index.html");
             resp.setStatus(HttpServletResponse.SC_OK);

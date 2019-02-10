@@ -2,6 +2,7 @@ package servlets;
 
 import accounts.AccountService;
 import accounts.UserProfile;
+import dbService.NoDataToGetException;
 import servers.MainServer;
 
 import javax.servlet.http.HttpServlet;
@@ -51,7 +52,12 @@ public class AuthorizationServlet extends HttpServlet {
             resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             return;
         }
-        UserProfile currentProfile = accountService.getUserByLogin(login);
+        UserProfile currentProfile = null;
+        try {
+            currentProfile = accountService.getUserByLogin(login);
+        } catch (NoDataToGetException e) {
+            e.printStackTrace();
+        }
         if (currentProfile == null) {
             StringBuilder outputLine = new StringBuilder();
             outputLine

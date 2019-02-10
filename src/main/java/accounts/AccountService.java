@@ -1,6 +1,7 @@
 package accounts;
 
 import dbService.DBService;
+import dbService.NoDataToGetException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -19,7 +20,7 @@ public class AccountService {
         dbService.addUserProfile(profile);
     }
 
-    public UserProfile getUserByLogin(String login) {
+    public UserProfile getUserByLogin(String login) throws NoDataToGetException {
         return dbService.getUserProfileByLogin(login);
     }
 

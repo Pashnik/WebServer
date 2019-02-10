@@ -1,5 +1,6 @@
 package dbService.dao;
 
+import dbService.NoDataToGetException;
 import dbService.executor.Executor;
 import accounts.UserProfile;
 
@@ -14,19 +15,19 @@ public class ProfileDAO {
         executor = new Executor(connection);
     }
 
-    public UserProfile getProfileById(long id) throws SQLException {
+    public UserProfile getProfileById(long id) throws SQLException, NoDataToGetException {
         StringBuilder query = new StringBuilder();
         query
                 .append("select * from users where id = ")
                 .append(id);
         return executor.makeQuery(query, resultSet -> {
-            if (!resultSet.isBeforeFirst()) return null;
+            if (!resultSet.isBeforeFirst()) throw new NoDataToGetException();
             resultSet.next();
             return new UserProfile(resultSet.getString(2), resultSet.getString(3));
         });
     }
 
-    public UserProfile getUserProfileByLogin(String login) throws SQLException {
+    public UserProfile getUserProfileByLogin(String login) throws SQLException, NoDataToGetException {
         StringBuilder query = new StringBuilder();
         query
                 .append("select * from users where login = ")
@@ -34,7 +35,7 @@ public class ProfileDAO {
                 .append(login)
                 .append("'");
         return executor.makeQuery(query, resultSet -> {
-            if (!resultSet.isBeforeFirst()) return null;
+            if (!resultSet.isBeforeFirst()) throw new NoDataToGetException();
             resultSet.next();
             return new UserProfile(resultSet.getString("login"), resultSet.getString("password"));
         });

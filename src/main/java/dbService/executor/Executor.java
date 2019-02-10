@@ -1,5 +1,7 @@
 package dbService.executor;
 
+import dbService.NoDataToGetException;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -37,7 +39,7 @@ public class Executor {
     Process: select
      */
 
-    public <T> T makeQuery(StringBuilder query, ResultGetter<T> resultGetter) throws SQLException {
+    public <T> T makeQuery(StringBuilder query, ResultGetter<T> resultGetter) throws SQLException, NoDataToGetException {
         try (Statement statement = connection.createStatement()) {
             statement.execute(query.toString());
             ResultSet resultSet = statement.getResultSet();

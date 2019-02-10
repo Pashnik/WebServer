@@ -54,7 +54,7 @@ public class DBService {
         }
     }
 
-    public UserProfile getUserProfileById(long id) {
+    public UserProfile getUserProfileById(long id) throws NoDataToGetException {
         try {
             ProfileDAO dao = new ProfileDAO(connection);
             dao.createTable();
@@ -65,11 +65,11 @@ public class DBService {
         return null;
     }
 
-    public UserProfile getUserProfileByLogin(String login) {
+    public UserProfile getUserProfileByLogin(String login) throws NoDataToGetException {
         try {
-            ProfileDAO profileDAO = new ProfileDAO(connection);
-            profileDAO.createTable();
-            return profileDAO.getUserProfileByLogin(login);
+            ProfileDAO dao = new ProfileDAO(connection);
+            dao.createTable();
+            return dao.getUserProfileByLogin(login);
         } catch (SQLException e) {
             e.printStackTrace();
         }
