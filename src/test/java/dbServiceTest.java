@@ -1,5 +1,6 @@
 import dbService.DBService;
 import accounts.UserProfile;
+import dbService.NoDataToGetException;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -17,8 +18,12 @@ public class dbServiceTest {
         dbService.addUserProfile(malik);
         dbService.addUserProfile(me);
 
-        assertEquals(me, dbService.getUserProfileById(2));
-        assertEquals(malik, dbService.getUserProfileById(1));
+        try {
+            assertEquals(me, dbService.getUserProfileById(2));
+            assertEquals(malik, dbService.getUserProfileById(1));
+        } catch (NoDataToGetException e) {
+            e.printStackTrace();
+        }
 
         dbService.dropTable();
     }
@@ -29,8 +34,12 @@ public class dbServiceTest {
         dbService.addUserProfile(me);
         dbService.addUserProfile(malik);
 
-        assertEquals(me, dbService.getUserProfileByLogin(me.getLogin()));
-        assertEquals(malik, dbService.getUserProfileByLogin(malik.getLogin()));
+        try {
+            assertEquals(me, dbService.getUserProfileByLogin(me.getLogin()));
+            assertEquals(malik, dbService.getUserProfileByLogin(malik.getLogin()));
+        } catch (NoDataToGetException e) {
+            e.printStackTrace();
+        }
 
         dbService.dropTable();
     }
