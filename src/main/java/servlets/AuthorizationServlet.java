@@ -52,33 +52,29 @@ public class AuthorizationServlet extends HttpServlet {
             resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             return;
         }
-        UserProfile currentProfile = null;
+
         try {
-            currentProfile = accountService.getUserByLogin(login);
+            UserProfile currentProfile = accountService.getUserByLogin(login);
+            if (currentProfile.getPassword().equals(password)) {
+                accountService.addSession(req.getSession().getId(), new UserProfile(login, password));
+                StringBuilder outputLine = new StringBuilder();
+                outputLine
+                        .append("Congratulations user: ")
+                        .append(login)
+                        .append(" you have just authorized!");
+                outputWriter.println(outputLine);
+                resp.setStatus(HttpServletResponse.SC_OK);
+            } else {
+                outputWriter.println("Please select true password!");
+                resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            }
         } catch (NoDataToGetException e) {
-            e.printStackTrace();
-        }
-        if (currentProfile == null) {
             StringBuilder outputLine = new StringBuilder();
             outputLine
                     .append("User: ")
                     .append(login)
                     .append(" is not registered!");
             outputWriter.println(outputLine);
-            resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-            return;
-        }
-        if (currentProfile.getPassword().equals(password)) {
-            accountService.addSession(req.getSession().getId(), new UserProfile(login, password));
-            StringBuilder outputLine = new StringBuilder();
-            outputLine
-                    .append("Congratulations user: ")
-                    .append(login)
-                    .append(" you have just authorized!");
-            outputWriter.println(outputLine);
-            resp.setStatus(HttpServletResponse.SC_OK);
-        } else {
-            outputWriter.println("Please select true password!");
             resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
         }
     }
