@@ -4,17 +4,23 @@ import accounts.AccountService;
 import accounts.UserProfile;
 import dbService.NoDataToGetException;
 import servers.MainServer;
+import templater.PageGenerator;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.HashMap;
+import java.util.Map;
 
 public class AuthorizationServlet extends HttpServlet {
 
     private static final String LOGIN = "login";
     private static final String PASSWORD = "password";
+    private static final String INCORRECT_PASS = "Incorrect password";
+    private static final String NOT_REGISTERED = "User is not registered";
+    private static final String ERRORS = "auth_false.html";
     private AccountService accountService;
 
     public AuthorizationServlet(AccountService accountService) {
@@ -48,11 +54,11 @@ public class AuthorizationServlet extends HttpServlet {
 
         PrintWriter outputWriter = resp.getWriter();
         resp.setContentType(MainServer.CONTENT_TYPE);
-        if (login == null || password == null) {
+        if (login.equals("") || password.equals("")) {
             resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             return;
         }
-
+        Map<String, Object> variables = new HashMap<>();
         try {
             UserProfile currentProfile = accountService.getUserByLogin(login);
             if (currentProfile.getPassword().equals(password)) {
@@ -65,16 +71,13 @@ public class AuthorizationServlet extends HttpServlet {
                 outputWriter.println(outputLine);
                 resp.setStatus(HttpServletResponse.SC_OK);
             } else {
-                outputWriter.println("Please select true password!");
+                variables.put("message", INCORRECT_PASS);
+                resp.getWriter().println(PageGenerator.instance().getPage(ERRORS, variables));
                 resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             }
         } catch (NoDataToGetException e) {
-            StringBuilder outputLine = new StringBuilder();
-            outputLine
-                    .append("User: ")
-                    .append(login)
-                    .append(" is not registered!");
-            outputWriter.println(outputLine);
+            variables.put("message", NOT_REGISTERED);
+            resp.getWriter().println(PageGenerator.instance().getPage(ERRORS, variables));
             resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
         }
     }

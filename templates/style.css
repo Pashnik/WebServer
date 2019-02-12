@@ -10,6 +10,21 @@
     margin: auto;
 }
 
+.false_pass_login_container {
+    margin-top: 5%;
+}
+
+.false_pass_login {
+    margin: auto;
+    border-radius: 5px;
+    padding: 4px;
+    width: 20%;
+    background-color: #ffdce0;
+    color: #86181d;
+    font-size: 14px;
+    text-align: center;
+}
+
 .form {
     position: relative;
     z-index: 1;

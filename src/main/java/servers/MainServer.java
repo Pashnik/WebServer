@@ -15,7 +15,6 @@ public class MainServer {
     public static final String CONTENT_TYPE = "text/html;charset=utf-8";
 
     public static void main(String[] args) {
-
         AccountService accountService = new AccountService();
 
         ServletContextHandler handler = new ServletContextHandler(ServletContextHandler.SESSIONS);
@@ -23,8 +22,9 @@ public class MainServer {
         handler.addServlet(new ServletHolder(new AuthorizationServlet(accountService)), "/logging");
 
         // static resources
-        ResourceHandler resourceHandler = new ResourceHandler();
-        resourceHandler.setResourceBase("templates");
+        ResourceHandler resourceHandler = new ResourceHandler(); // use /templates for artifacts
+        resourceHandler.setResourceBase("/Users/pashnik/IdeaProjects/WebServer/templates");
+        resourceHandler.setWelcomeFiles(new String[]{"index.html"});
 
         HandlerList handlerList = new HandlerList();
         handlerList.setHandlers(new Handler[]{resourceHandler, handler}); // firstly will process static resources
@@ -39,5 +39,4 @@ public class MainServer {
             e.printStackTrace();
         }
     }
-
 }

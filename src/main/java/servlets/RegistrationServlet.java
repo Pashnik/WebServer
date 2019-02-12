@@ -29,7 +29,7 @@ public class RegistrationServlet extends HttpServlet {
 
         PrintWriter outputWriter = resp.getWriter();
         resp.setContentType(MainServer.CONTENT_TYPE);
-        if (login == null) {
+        if (login.equals("")) {
             resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             return;
         }
@@ -61,7 +61,7 @@ public class RegistrationServlet extends HttpServlet {
 
         PrintWriter outputWriter = resp.getWriter();
         resp.setContentType(MainServer.CONTENT_TYPE);
-        if (login == null || password == null) {
+        if (login.equals("") || password.equals("")) {
             resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             return;
         }

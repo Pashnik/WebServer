@@ -16,7 +16,7 @@ public class DBService {
         this.connection = getConnection();
     }
 
-    private Connection getConnection() {
+    private Connection getConnection() { // use ~/test for artifacts
         try {
             String url = "jdbc:h2:/Users/pashnik/IdeaProjects";
             String name = "sa";

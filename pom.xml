@@ -29,7 +29,7 @@
                     <appendAssemblyId>false</appendAssemblyId>
                     <archive>
                         <manifest>
-                            <mainClass>servers.SimpleServer</mainClass>
+                            <mainClass>servers.MainServer</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
