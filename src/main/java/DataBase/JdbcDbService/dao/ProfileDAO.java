@@ -1,7 +1,7 @@
-package dbService.dao;
+package DataBase.JdbcDbService.dao;
 
-import dbService.NoDataToGetException;
-import dbService.executor.Executor;
+import DataBase.JdbcDbService.NoDataToGetException;
+import DataBase.JdbcDbService.executor.Executor;
 import accounts.UserProfile;
 
 import java.sql.Connection;

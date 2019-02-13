@@ -1,6 +1,6 @@
-import dbService.DBService;
+import DataBase.JdbcDbService.JDBCService;
 import accounts.UserProfile;
-import dbService.NoDataToGetException;
+import DataBase.JdbcDbService.NoDataToGetException;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -14,7 +14,7 @@ public class dbServiceTest {
 
     @Test
     public void getUserById() {
-        DBService dbService = new DBService();
+        JDBCService dbService = new JDBCService();
         dbService.addUserProfile(malik);
         dbService.addUserProfile(me);
 
@@ -30,7 +30,7 @@ public class dbServiceTest {
 
     @Test
     public void getUsersByLogin() {
-        DBService dbService = new DBService();
+        JDBCService dbService = new JDBCService();
         dbService.addUserProfile(me);
         dbService.addUserProfile(malik);
 

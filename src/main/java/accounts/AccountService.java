@@ -1,18 +1,19 @@
 package accounts;
 
-import dbService.DBService;
-import dbService.NoDataToGetException;
+import DataBase.DataBaseServiceable;
+import DataBase.JdbcDbService.JDBCService;
+import DataBase.JdbcDbService.NoDataToGetException;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class AccountService {
 
-    private final DBService dbService;
+    private final DataBaseServiceable dbService;
     private final Map<String, UserProfile> sessionIdToProfile;
 
     public AccountService() {
-        dbService = new DBService();
+        dbService = new JDBCService();
         sessionIdToProfile = new HashMap<>();
     }
 
@@ -35,5 +36,4 @@ public class AccountService {
     public void deleteSession(String sessionId) {
         sessionIdToProfile.remove(sessionId);
     }
-
 }

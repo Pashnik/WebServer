@@ -1,6 +1,7 @@
-package dbService;
+package DataBase.JdbcDbService;
 
-import dbService.dao.ProfileDAO;
+import DataBase.DataBaseServiceable;
+import DataBase.JdbcDbService.dao.ProfileDAO;
 import accounts.UserProfile;
 import org.h2.jdbcx.JdbcDataSource;
 
@@ -8,17 +9,17 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class DBService {
+public class JDBCService implements DataBaseServiceable {
 
     private final Connection connection;
 
-    public DBService() {
+    public JDBCService() {
         this.connection = getConnection();
     }
 
     private Connection getConnection() { // use ~/test for artifacts
         try {
-            String url = "jdbc:h2:/Users/pashnik/IdeaProjects";
+            String url = "jdbc:h2:~/test";
             String name = "sa";
             String password = "";
 
@@ -34,6 +35,7 @@ public class DBService {
         return null;
     }
 
+    @Override
     public void addUserProfile(UserProfile userProfile) {
         try {
             connection.setAutoCommit(false);
@@ -54,6 +56,7 @@ public class DBService {
         }
     }
 
+    @Override
     public UserProfile getUserProfileById(long id) throws NoDataToGetException {
         try {
             ProfileDAO dao = new ProfileDAO(connection);
@@ -65,6 +68,7 @@ public class DBService {
         return null;
     }
 
+    @Override
     public UserProfile getUserProfileByLogin(String login) throws NoDataToGetException {
         try {
             ProfileDAO dao = new ProfileDAO(connection);

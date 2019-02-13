@@ -1,6 +1,6 @@
-package dbService.executor;
+package DataBase.JdbcDbService.executor;
 
-import dbService.NoDataToGetException;
+import DataBase.JdbcDbService.NoDataToGetException;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
