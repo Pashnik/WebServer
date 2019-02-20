@@ -55,6 +55,9 @@ public class AuthorizationServlet extends HttpServlet {
         PrintWriter outputWriter = resp.getWriter();
         resp.setContentType(MainServer.CONTENT_TYPE);
         if (login.equals("") || password.equals("")) {
+            StringBuilder outputLine = new StringBuilder();
+            outputLine.append("Please fill all fields!");
+            outputWriter.println(outputLine);
             resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             return;
         }

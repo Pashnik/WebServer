@@ -23,7 +23,7 @@ public class MainServer {
 
         // static resources
         ResourceHandler resourceHandler = new ResourceHandler(); // use /templates for artifacts
-        resourceHandler.setResourceBase("/templates");
+        resourceHandler.setResourceBase("/Users/pashnik/IdeaProjects/WebServer/templates");
         resourceHandler.setWelcomeFiles(new String[]{"index.html"});
 
         HandlerList handlerList = new HandlerList();

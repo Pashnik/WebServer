@@ -3,6 +3,7 @@ package DataBase.HibernateDbService;
 import DataBase.DataBaseServiceable;
 import DataBase.JdbcDbService.NoDataToGetException;
 import accounts.UserProfile;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
@@ -39,18 +40,27 @@ public class HibernateDBService implements DataBaseServiceable {
 
     @Override
     public void addUserProfile(UserProfile userProfile) {
-        // todo
+        Session session = sessionFactory.openSession();
+        DaoHibernate dao = new DaoHibernate(session);
+        dao.add(userProfile);
+        session.close();
     }
 
     @Override
     public UserProfile getUserProfileByLogin(String login) throws NoDataToGetException {
-        // todo
-        return null;
+        Session session = sessionFactory.openSession();
+        DaoHibernate dao = new DaoHibernate(session);
+        UserProfile userProfile = dao.getByLogin(login);
+        session.close();
+        return userProfile;
     }
 
     @Override
     public UserProfile getUserProfileById(long id) throws NoDataToGetException {
-        // todo
-        return null;
+        Session session = sessionFactory.openSession();
+        DaoHibernate dao = new DaoHibernate(session);
+        UserProfile userProfile = dao.getById(id);
+        session.close();
+        return userProfile;
     }
 }

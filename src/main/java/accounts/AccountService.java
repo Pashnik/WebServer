@@ -1,7 +1,7 @@
 package accounts;
 
 import DataBase.DataBaseServiceable;
-import DataBase.JdbcDbService.JDBCService;
+import DataBase.HibernateDbService.HibernateDBService;
 import DataBase.JdbcDbService.NoDataToGetException;
 
 import java.util.HashMap;
@@ -13,7 +13,7 @@ public class AccountService {
     private final Map<String, UserProfile> sessionIdToProfile;
 
     public AccountService() {
-        dbService = new JDBCService();
+        dbService = new HibernateDBService();
         sessionIdToProfile = new HashMap<>();
     }
 

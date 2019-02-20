@@ -7,19 +7,21 @@ import java.io.Serializable;
 @Entity
 @Table(name = "usersHibernate")
 public class UserDataSet implements Serializable {
-    private static final long serialVersionUID = -1231234141241242141L;
+    private static final long serialVersionUID = -8706689714326132798L;
 
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(name = "login", unique = true)
+    @Column(name = "login", unique = true, updatable = false)
     private String login;
 
-    @Column(name = "password")
+    @Column(name = "password", unique = true, updatable = false)
     private String password;
 
+    //Important to Hibernate!
+    @SuppressWarnings("UnusedDeclaration")
     public UserDataSet() {
 
     }
@@ -29,16 +31,19 @@ public class UserDataSet implements Serializable {
         this.password = password;
     }
 
+    @SuppressWarnings("UnusedDeclaration")
     public UserDataSet(long id, String login, String password) {
         this.id = id;
         this.login = login;
         this.password = password;
     }
 
+    @SuppressWarnings("UnusedDeclaration")
     public long getId() {
         return id;
     }
 
+    @SuppressWarnings("UnusedDeclaration")
     public void setId(long id) {
         this.id = id;
     }
@@ -55,6 +60,7 @@ public class UserDataSet implements Serializable {
         return password;
     }
 
+    @SuppressWarnings("UnusedDeclaration")
     public void setPassword(String password) {
         this.password = password;
     }
