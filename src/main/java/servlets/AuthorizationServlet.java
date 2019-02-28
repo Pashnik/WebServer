@@ -2,7 +2,7 @@ package servlets;
 
 import accounts.AccountService;
 import accounts.UserProfile;
-import DataBase.JdbcDbService.NoDataToGetException;
+import database.JdbcDbService.NoDataToGetException;
 import servers.MainServer;
 import templater.PageGenerator;
 

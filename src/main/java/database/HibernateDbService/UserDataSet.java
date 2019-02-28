@@ -1,4 +1,4 @@
-package DataBase.HibernateDbService;
+package database.HibernateDbService;
 
 import javax.persistence.*;
 import java.io.Serializable;

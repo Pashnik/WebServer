@@ -1,7 +1,7 @@
-package DataBase.JdbcDbService;
+package database.JdbcDbService;
 
-import DataBase.DataBaseServiceable;
-import DataBase.JdbcDbService.dao.ProfileDAO;
+import database.DataBaseServiceable;
+import database.JdbcDbService.dao.ProfileDAO;
 import accounts.UserProfile;
 import org.h2.jdbcx.JdbcDataSource;
 

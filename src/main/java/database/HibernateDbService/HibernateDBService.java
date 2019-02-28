@@ -1,7 +1,7 @@
-package DataBase.HibernateDbService;
+package database.HibernateDbService;
 
-import DataBase.DataBaseServiceable;
-import DataBase.JdbcDbService.NoDataToGetException;
+import database.DataBaseServiceable;
+import database.JdbcDbService.NoDataToGetException;
 import accounts.UserProfile;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;

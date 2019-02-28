@@ -1,8 +1,8 @@
 package accounts;
 
-import DataBase.DataBaseServiceable;
-import DataBase.HibernateDbService.HibernateDBService;
-import DataBase.JdbcDbService.NoDataToGetException;
+import database.DataBaseServiceable;
+import database.HibernateDbService.HibernateDBService;
+import database.JdbcDbService.NoDataToGetException;
 
 import java.util.HashMap;
 import java.util.Map;

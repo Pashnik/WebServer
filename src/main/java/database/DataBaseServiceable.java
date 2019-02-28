@@ -1,6 +1,6 @@
-package DataBase;
+package database;
 
-import DataBase.JdbcDbService.NoDataToGetException;
+import database.JdbcDbService.NoDataToGetException;
 import accounts.UserProfile;
 
 public interface DataBaseServiceable {

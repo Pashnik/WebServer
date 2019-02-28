@@ -1,6 +1,6 @@
-import DataBase.JdbcDbService.JDBCService;
+import database.JdbcDbService.JDBCService;
 import accounts.UserProfile;
-import DataBase.JdbcDbService.NoDataToGetException;
+import database.JdbcDbService.NoDataToGetException;
 import org.junit.Test;
 
 import static org.junit.Assert.*;

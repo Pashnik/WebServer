@@ -1,4 +1,4 @@
-package DataBase.JdbcDbService;
+package database.JdbcDbService;
 
 public class NoDataToGetException extends Exception {
     public NoDataToGetException(String message) {

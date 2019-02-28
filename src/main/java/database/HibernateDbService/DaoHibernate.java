@@ -1,6 +1,6 @@
-package DataBase.HibernateDbService;
+package database.HibernateDbService;
 
-import DataBase.JdbcDbService.NoDataToGetException;
+import database.JdbcDbService.NoDataToGetException;
 import accounts.UserProfile;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
