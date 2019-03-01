@@ -27,8 +27,8 @@ public class MainServer {
 
         // static resources
         ResourceHandler resourceHandler = new ResourceHandler(); // use /templates for artifacts
-        resourceHandler.setResourceBase("/Users/pashnik/IdeaProjects/WebServer/templates");
-        resourceHandler.setWelcomeFiles(new String[]{"index.html"});
+        resourceHandler.setResourceBase("/Users/pashnik/IdeaProjects/MyWebServer/templates");
+        resourceHandler.setWelcomeFiles(new String[]{"chat.html"});
 
         HandlerList handlerList = new HandlerList();
         handlerList.setHandlers(new Handler[]{resourceHandler, handler}); // firstly will process static resources

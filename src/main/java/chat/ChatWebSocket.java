@@ -16,20 +16,23 @@ public class ChatWebSocket {
     @OnWebSocketConnect
     public void onOpen(Session session) {
         this.session = session;
+        System.out.println("Connection is opened!");
+        ChatService.getInstance().addSocket(this);
     }
 
     @OnWebSocketClose
     public void onClose(int status, String reason) {
-        System.out.println("Close: statusCode =" + status + ", reason =" + reason);
+        System.out.println("Close: statusCode =" + " " + status + ", reason =" + " " + reason);
+        ChatService.getInstance().removeSocket(this);
     }
 
     @OnWebSocketMessage
     public void onMessage(String data) {
-        try {
-            session.getRemote().sendString(data);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        ChatService.getInstance().sendMessages(data);
+    }
+
+    public void sendMessage(String message) throws IOException {
+        session.getRemote().sendString(message);
     }
 
 }
