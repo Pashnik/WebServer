@@ -21,6 +21,7 @@ public class AuthorizationServlet extends HttpServlet {
     private static final String INCORRECT_PASS = "Incorrect password";
     private static final String NOT_REGISTERED = "User is not registered";
     private static final String ERRORS = "auth_false.html";
+    private static final String CHAT = "chat.html";
     private AccountService accountService;
 
     public AuthorizationServlet(AccountService accountService) {
@@ -64,14 +65,14 @@ public class AuthorizationServlet extends HttpServlet {
         Map<String, Object> variables = new HashMap<>();
         try {
             UserProfile currentProfile = accountService.getUserByLogin(login);
-            if (currentProfile.getPassword().equals(password)) {
+            if (currentProfile.getPassword().equals(password)) { // successfully authorized
+
+                Map<String, Object> chatGeneratorVariables = new HashMap<>();
+                chatGeneratorVariables.put("username", currentProfile.getLogin());
+
                 accountService.addSession(req.getSession().getId(), new UserProfile(login, password));
-                StringBuilder outputLine = new StringBuilder();
-                outputLine
-                        .append("Congratulations user: ")
-                        .append(login)
-                        .append(" you have just authorized!");
-                outputWriter.println(outputLine);
+
+                resp.getWriter().println(PageGenerator.instance().getPage(CHAT, chatGeneratorVariables));
                 resp.setStatus(HttpServletResponse.SC_OK);
             } else {
                 variables.put("message", INCORRECT_PASS);
