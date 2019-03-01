@@ -8,7 +8,10 @@ import org.eclipse.jetty.server.handler.ResourceHandler;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 import servlets.AuthorizationServlet;
+import servlets.ChatServlet;
 import servlets.RegistrationServlet;
+
+import java.util.logging.Logger;
 
 public class MainServer {
 
@@ -20,6 +23,7 @@ public class MainServer {
         ServletContextHandler handler = new ServletContextHandler(ServletContextHandler.SESSIONS);
         handler.addServlet(new ServletHolder(new RegistrationServlet(accountService)), "/register");
         handler.addServlet(new ServletHolder(new AuthorizationServlet(accountService)), "/logging");
+        handler.addServlet(new ServletHolder(new ChatServlet()), "/chat");
 
         // static resources
         ResourceHandler resourceHandler = new ResourceHandler(); // use /templates for artifacts
@@ -34,6 +38,7 @@ public class MainServer {
         server.setHandler(handlerList);
         try {
             server.start();
+            Logger.getGlobal().info("Server started");
             server.join();
         } catch (Exception e) {
             e.printStackTrace();
