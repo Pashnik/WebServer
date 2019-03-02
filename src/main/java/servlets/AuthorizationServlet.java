@@ -62,26 +62,26 @@ public class AuthorizationServlet extends HttpServlet {
             resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             return;
         }
-        Map<String, Object> variables = new HashMap<>();
+        Map<String, Object> errorVariables = new HashMap<>();
         try {
             UserProfile currentProfile = accountService.getUserByLogin(login);
             if (currentProfile.getPassword().equals(password)) { // successfully authorized
 
-                Map<String, Object> chatGeneratorVariables = new HashMap<>();
-                chatGeneratorVariables.put("username", currentProfile.getLogin());
+                Map<String, Object> chatVariables = new HashMap<>();
+                chatVariables.put("username", currentProfile.getLogin());
 
                 accountService.addSession(req.getSession().getId(), new UserProfile(login, password));
 
-                resp.getWriter().println(PageGenerator.instance().getPage(CHAT, chatGeneratorVariables));
+                resp.getWriter().println(PageGenerator.instance().getPage(CHAT, chatVariables));
                 resp.setStatus(HttpServletResponse.SC_OK);
             } else {
-                variables.put("message", INCORRECT_PASS);
-                resp.getWriter().println(PageGenerator.instance().getPage(ERRORS, variables));
+                errorVariables.put("message", INCORRECT_PASS);
+                resp.getWriter().println(PageGenerator.instance().getPage(ERRORS, errorVariables));
                 resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             }
         } catch (NoDataToGetException e) {
-            variables.put("message", NOT_REGISTERED);
-            resp.getWriter().println(PageGenerator.instance().getPage(ERRORS, variables));
+            errorVariables.put("message", NOT_REGISTERED);
+            resp.getWriter().println(PageGenerator.instance().getPage(ERRORS, errorVariables));
             resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
         }
     }
